@@ -1,9 +1,38 @@
 <html>
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-</head>
-<body>
-<span>Hello world</span>
-</body>
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <meta http-equiv="Content-Language" content="zh-cn" /> 
+ </head> 
+ <body> 
+  <div id="treeList"></div> 
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+  <script type="text/javascript">
+(function worker() {
+  console.log("starting............");
+  $.ajax({
+  url: 'https://randomuser.me/api/?results=2000',
+  dataType: 'json',
+  success: function(data) {
+console.log("success............");
+initTable(data);
+  function initTable (data) {
+    var html = '<table border=1>';
+    for (var j in data.results) {
+      var obj = data.results[j];
+      html += '<tr>'
+      html += '<td width="20" height="20">' + '<img src=' + obj.picture.medium + ' width="20" height="20"/>' + '</td>';
+      html += '<td>' + obj.gender + '</td>';
+      html += '<td>' + obj.name.first + ' ' + obj.name.last + '</td>';
+      html += '<td>' + obj.phone + '</td>';
+      html += '<td>' + obj.location.street + '</td>';
+      html += '<td>' + obj.location.city + '</td>';
+      html += '</tr>'
+    }
+    html += '</table>';
+    $('#treeList').append(html);
+  }
+}});
+})();
+  </script>  
+ </body>
 </html>
